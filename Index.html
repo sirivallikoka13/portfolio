@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koka Sirivalli — Computer Science Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12141c;
+    --bg-alt:#1b1e2a;
+    --bg-raised:#20232f;
+    --text:#e8e6dd;
+    --text-dim:#9ca0ae;
+    --accent:#d4a94a;
+    --accent-2:#5fa8a0;
+    --border:#2a2e3d;
+    --serif:'Fraunces', serif;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  section{padding:120px 0;}
+  @media (max-width:720px){ section{padding:72px 0;} .wrap{padding:0 20px;} }
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(18,20,28,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px; padding-left:32px; padding-right:32px;
+  }
+  .logo{
+    font-family:var(--mono); font-size:15px; color:var(--accent);
+    letter-spacing:0.02em;
+  }
+  .logo span{color:var(--text-dim);}
+  .navlinks{display:flex; gap:36px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em;}
+  .navlinks a{color:var(--text-dim); transition:color 0.2s;}
+  .navlinks a:hover{color:var(--text);}
+  .navlinks .num{color:var(--accent-2); margin-right:6px;}
+  @media (max-width:640px){ .navlinks{display:none;} }
+
+  /* HERO */
+  .hero{
+    padding-top:100px; padding-bottom:100px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .hero{grid-template-columns:1fr; padding-top:64px;} }
+  .eyebrow{
+    font-family:var(--mono); color:var(--accent-2); font-size:13px;
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--accent-2);}
+  h1.name{
+    font-family:var(--serif); font-weight:600; font-size:clamp(40px,6vw,68px);
+    line-height:1.05; letter-spacing:-0.01em; margin-bottom:24px;
+  }
+  h1.name .last{color:var(--accent); font-style:italic; font-weight:500;}
+  .hero-desc{color:var(--text-dim); font-size:17px; max-width:480px; margin-bottom:36px;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13px; padding:13px 22px; border-radius:3px;
+    border:1px solid var(--border); transition:all 0.2s; letter-spacing:0.02em;
+  }
+  .btn-primary{background:var(--accent); color:#1a1710; border-color:var(--accent); font-weight:600;}
+  .btn-primary:hover{background:#e6bb5e;}
+  .btn-ghost{color:var(--text); border-color:var(--border);}
+  .btn-ghost:hover{border-color:var(--accent-2); color:var(--accent-2);}
+
+  /* Terminal */
+  .terminal{
+    background:var(--bg-alt); border:1px solid var(--border); border-radius:8px;
+    overflow:hidden; box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    border-bottom:1px solid var(--border); background:var(--bg-raised);
+  }
+  .term-dot{width:10px; height:10px; border-radius:50%;}
+  .term-bar .d1{background:#e0605a;} .term-bar .d2{background:#e0b95a;} .term-bar .d3{background:#5ac97a;}
+  .term-title{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--text-dim);}
+  .term-body{padding:22px 20px; font-family:var(--mono); font-size:14px; min-height:220px;}
+  .term-line{margin-bottom:10px; color:var(--text-dim);}
+  .term-line .prompt{color:var(--accent-2);}
+  .term-line .path{color:var(--accent);}
+  .term-out{color:var(--text); margin-bottom:14px; white-space:pre-wrap;}
+  .cursor{display:inline-block; width:8px; height:15px; background:var(--accent); margin-left:2px; vertical-align:middle; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* Section headers */
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:48px;}
+  .sec-num{font-family:var(--mono); color:var(--accent-2); font-size:14px;}
+  h2.sec-title{font-family:var(--serif); font-weight:600; font-size:clamp(28px,3.4vw,38px);}
+  .sec-line{flex:1; height:1px; background:var(--border);}
+
+  /* About */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:56px;}
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{color:var(--text-dim); font-size:16px; margin-bottom:18px; max-width:520px;}
+  .about-text strong{color:var(--text); font-weight:600;}
+  .edu-card{
+    background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:26px;
+  }
+  .edu-card .tag{font-family:var(--mono); font-size:11px; color:var(--accent-2); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;}
+  .edu-card h3{font-family:var(--serif); font-size:20px; font-weight:600; margin-bottom:6px;}
+  .edu-card p{color:var(--text-dim); font-size:14px; margin-bottom:4px;}
+
+  /* Skills */
+  .skills-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media (max-width:700px){ .skills-grid{grid-template-columns:1fr;} }
+  .skill-cat{background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:24px;}
+  .skill-cat .cat-title{font-family:var(--mono); font-size:12px; color:var(--accent); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;}
+  .skill-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-tag{
+    font-family:var(--mono); font-size:12.5px; padding:6px 12px; border-radius:20px;
+    background:var(--bg-raised); border:1px solid var(--border); color:var(--text-dim);
+  }
+
+  /* Projects */
+  .proj-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:900px){ .proj-grid{grid-template-columns:1fr;} }
+  .proj-card{
+    background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:26px;
+    display:flex; flex-direction:column; gap:14px; transition:border-color 0.2s, transform 0.2s;
+  }
+  .proj-card:hover{border-color:var(--accent-2); transform:translateY(-3px);}
+  .proj-idx{font-family:var(--mono); color:var(--accent-2); font-size:12px;}
+  .proj-card h3{font-family:var(--serif); font-size:19px; font-weight:600;}
+  .proj-card p{color:var(--text-dim); font-size:14px; flex:1;}
+  .proj-tags{display:flex; flex-wrap:wrap; gap:6px;}
+  .proj-tags span{font-family:var(--mono); font-size:11px; color:var(--text-dim); border:1px solid var(--border); padding:3px 9px; border-radius:20px;}
+
+  /* Contact */
+  .contact-term{max-width:640px; margin:0 auto;}
+  .contact-links{display:flex; gap:16px; flex-wrap:wrap; margin-top:28px; justify-content:center;}
+  .contact-links a{
+    font-family:var(--mono); font-size:13.5px; padding:11px 20px; border:1px solid var(--border);
+    border-radius:3px; color:var(--text-dim); transition:all 0.2s;
+  }
+  .contact-links a:hover{color:var(--accent); border-color:var(--accent);}
+  .contact-head{text-align:center;}
+
+  footer{border-top:1px solid var(--border); padding:32px 0; text-align:center;}
+  footer p{font-family:var(--mono); font-size:12px; color:var(--text-dim);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">sirivalli<span>.dev</span></div>
+    <div class="navlinks">
+      <a href="#about"><span class="num">01</span>About</a>
+      <a href="#skills"><span class="num">02</span>Skills</a>
+      <a href="#projects"><span class="num">03</span>Projects</a>
+      <a href="#contact"><span class="num">04</span>Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-ghost" style="padding:9px 16px;">Say hi</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Computer Science Engineer</p>
+      <h1 class="name">Koka <span class="last">Sirivalli</span></h1>
+      <p class="hero-desc">CSE graduate from Vignan Institute of Technology and Science, Hyderabad. Building a foundation in backend logic, data platforms, and enterprise systems — one algorithm and one query at a time.</p>
+      <div class="cta-row">
+        <a href="mailto:sirivallikoka1303@gmail.com" class="btn btn-primary">Email me</a>
+        <a href="https://www.linkedin.com/in/kokasirivalli-59b9053b5" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="term-dot d1"></span><span class="term-dot d2"></span><span class="term-dot d3"></span>
+        <span class="term-title">sirivalli@portfolio ~ zsh</span>
+      </div>
+      <div class="term-body" id="termBody">
+        <div class="term-line"><span class="prompt">sirivalli@dev</span>:<span class="path">~</span>$ <span id="typeTarget"></span><span class="cursor"></span></div>
+        <div id="termOutput" style="display:none;">
+          <div class="term-out">Name    : Koka Sirivalli
+Role    : Computer Science Engineer
+Base    : Hyderabad, Telangana, IN
+Focus   : Python · Databases · Platform Eng
+Status  : Open to opportunities</div>
+          <div class="term-line"><span class="prompt">sirivalli@dev</span>:<span class="path">~</span>$ <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">About</h2><div class="sec-line"></div></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a Computer Science graduate who likes systems that hold together under pressure — clean data models, dependable backend logic, and platforms that scale past the demo. Most days you'll find me deep in a coding problem, working through algorithm design with a focus on <strong>correctness first, elegance second</strong>.</p>
+        <p>Recently I've been sharpening my grip on <strong>Python problem-solving</strong>, <strong>database internals</strong> like write concern and durability guarantees, and enterprise platform concepts on <strong>ServiceNow</strong> — from client/server-side scripting to scoped session methods.</p>
+        <p>I'm looking for a role where I can turn that curiosity into production software.</p>
+      </div>
+      <div class="edu-card">
+        <p class="tag">Education</p>
+        <h3>B.Tech, Computer Science &amp; Engineering</h3>
+        <p>Vignan Institute of Technology and Science</p>
+        <p>Hyderabad, Telangana, India</p>
+        <p style="margin-top:10px; color:var(--accent-2);">Class of 2023</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Skills</h2><div class="sec-line"></div></div>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <p class="cat-title">Languages &amp; Problem Solving</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Data Structures</span>
+          <span class="skill-tag">Algorithms</span>
+          <span class="skill-tag">Backtracking</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <p class="cat-title">Data &amp; Databases</p>
+        <div class="skill-tags">
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Write Concerns</span>
+          <span class="skill-tag">Schema Design</span>
+          <span class="skill-tag">SQL basics</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <p class="cat-title">Platform Engineering</p>
+        <div class="skill-tags">
+          <span class="skill-tag">ServiceNow</span>
+          <span class="skill-tag">GlideRecord / GlideUser</span>
+          <span class="skill-tag">Client &amp; Server Scripting</span>
+          <span class="skill-tag">Scoped Applications</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <p class="cat-title">Tools &amp; Practices</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Source Control</span>
+          <span class="skill-tag">Technical Documentation</span>
+          <span class="skill-tag">English Communication</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Projects</h2><div class="sec-line"></div></div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <span class="proj-idx">// 01</span>
+        <h3>Subset Generator (Backtracking)</h3>
+        <p>A Python solution for generating unique subsets from a collection with duplicates, built to handle edge cases cleanly using classic backtracking recursion.</p>
+        <div class="proj-tags"><span>Python</span><span>Backtracking</span><span>Algorithms</span></div>
+      </div>
+      <div class="proj-card">
+        <span class="proj-idx">// 02</span>
+        <h3>Write-Concern Durability Notes</h3>
+        <p>Applied study of MongoDB write concern behavior — mapping out exactly when a majority write concern can still fail to guarantee durability.</p>
+        <div class="proj-tags"><span>MongoDB</span><span>Databases</span></div>
+      </div>
+      <div class="proj-card">
+        <span class="proj-idx">// 03</span>
+        <h3>ServiceNow Platform Notes</h3>
+        <p>A working knowledge base covering client/server scripting, schema maps, report types, and scoped GlideSession methods on the ServiceNow platform.</p>
+        <div class="proj-tags"><span>ServiceNow</span><span>Platform Eng</span></div>
+      </div>
+    </div>
+    <p style="color:var(--text-dim); font-size:13px; margin-top:24px; font-family:var(--mono);">// Placeholder entries — swap in your own project titles, write-ups, and links.</p>
+  </div>
+</section>
+
+<section id="contact" style="background:var(--bg-alt); border-top:1px solid var(--border);">
+  <div class="wrap contact-term">
+    <div class="contact-head">
+      <p class="eyebrow" style="justify-content:center;">Get in touch</p>
+      <h2 class="sec-title">Let's build something.</h2>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:sirivallikoka1303@gmail.com">sirivallikoka1303@gmail.com</a>
+      <a href="https://www.linkedin.com/in/kokasirivalli-59b9053b5" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Koka Sirivalli — built with care in Hyderabad.</p>
+</footer>
+
+<script>
+  const text = "whoami --verbose";
+  const target = document.getElementById('typeTarget');
+  const output = document.getElementById('termOutput');
+  let i = 0;
+  function type(){
+    if(i < text.length){
+      target.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 55);
+    } else {
+      setTimeout(()=>{ output.style.display = 'block'; }, 300);
+    }
+  }
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    target.textContent = text;
+    output.style.display = 'block';
+  } else {
+    type();
+  }
+</script>
+
+</body>
+</html>
